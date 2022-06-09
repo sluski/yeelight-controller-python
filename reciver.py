@@ -1,13 +1,31 @@
+import json
+import random
 import socket
+import time
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-# sock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_TTL, 20)
-# sock.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_LOOP, 1)
 
-sock.bind(('', 5004))
+def calculate_color(red, green, blue):
+    return red * 65536 + green * 256 + blue
 
-print("Listening: ");
-while True:
-    data, addr = sock.recvfrom(1024)  # buffer size is 1024 bytes
-    print("received message: %s" % data)
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock.bind(("192.168.0.14", 55432))
+sock.listen()
+print("Starting server")
+
+conn, addr = sock.accept()
+print(addr)
+
+# while True:
+
+    # data = json.dumps({
+    #     "id": 1,
+    #     "method": "set_rgb",
+    #     "params": [calculate_color(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), "sudden", 30]
+    # }) + "\r\n"
+    # conn.sendall(data.encode())
+    # time.sleep(0.3)
+
+
+
+
